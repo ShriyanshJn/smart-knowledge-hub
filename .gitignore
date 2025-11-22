@@ -1,0 +1,96 @@
+# ============================================
+#       ROOT .gitignore
+# ============================================
+
+##############################################
+#                ANGULAR / NODE
+##############################################
+
+dist/
+tmp/
+out-tsc/
+bazel-out/
+
+node_modules/
+npm-debug.log
+yarn-error.log
+
+.angular/cache/
+.sass-cache/
+connect.lock
+coverage/
+libpeerconnection.log
+testem.log
+typings/
+
+##############################################
+#                .NET / C#
+##############################################
+
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.db
+*.sqlite
+*.log
+
+# NuGet packages
+*.nupkg
+packages/
+
+# Lock files
+project.lock.json
+
+# ASP.NET secrets
+appsettings.Development.json
+appsettings.Local.json
+
+##############################################
+#            VISUAL STUDIO / IDE
+##############################################
+
+.vs/
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+##############################################
+#              VISUAL STUDIO CODE
+##############################################
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+
+##############################################
+#                 DOCKER
+##############################################
+
+*.pid
+*.sock
+
+##############################################
+#                  SYSTEM
+##############################################
+
+.DS_Store
+Thumbs.db
+
+##############################################
+#                MISC
+##############################################
+
+# Logs
+*.log
+
+# Environment files
+*.env

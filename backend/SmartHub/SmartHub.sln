@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHub.API", "SmartHub.API\SmartHub.API.csproj", "{60600D84-77DA-49BA-BC18-02318F37623B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHub.Auth", "SmartHub.Auth\SmartHub.Auth.csproj", "{4D29971D-9DEC-4D90-8CE8-81388157393E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHub.Core", "SmartHub.Core\SmartHub.Core.csproj", "{5C13A7A4-B0A5-42EF-802B-17CA9B1A9450}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHub.Infrastructure", "SmartHub.Infrastructure\SmartHub.Infrastructure.csproj", "{39F058C1-2BC1-4E97-8313-5EC093529903}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60600D84-77DA-49BA-BC18-02318F37623B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60600D84-77DA-49BA-BC18-02318F37623B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60600D84-77DA-49BA-BC18-02318F37623B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60600D84-77DA-49BA-BC18-02318F37623B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D29971D-9DEC-4D90-8CE8-81388157393E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D29971D-9DEC-4D90-8CE8-81388157393E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D29971D-9DEC-4D90-8CE8-81388157393E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D29971D-9DEC-4D90-8CE8-81388157393E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C13A7A4-B0A5-42EF-802B-17CA9B1A9450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C13A7A4-B0A5-42EF-802B-17CA9B1A9450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C13A7A4-B0A5-42EF-802B-17CA9B1A9450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C13A7A4-B0A5-42EF-802B-17CA9B1A9450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39F058C1-2BC1-4E97-8313-5EC093529903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39F058C1-2BC1-4E97-8313-5EC093529903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39F058C1-2BC1-4E97-8313-5EC093529903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39F058C1-2BC1-4E97-8313-5EC093529903}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

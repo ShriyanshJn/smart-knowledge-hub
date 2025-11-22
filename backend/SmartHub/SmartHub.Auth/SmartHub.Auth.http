@@ -1,0 +1,6 @@
+@SmartHub.Auth_HostAddress = http://localhost:5036
+
+GET {{SmartHub.Auth_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
