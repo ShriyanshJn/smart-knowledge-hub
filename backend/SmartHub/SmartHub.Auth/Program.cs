@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using SmartHub.Core.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 #region AWS Configuration  
@@ -15,6 +20,38 @@ if (!string.IsNullOrWhiteSpace(jwtSecret))
 
 // Add services to the container.  
 
+#region CustomServices
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("JwtSettings")
+);
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwtSettings = builder.Configuration
+            .GetSection("JwtSettings")
+            .Get<JwtSettings>();
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = jwtSettings!.Issuer,
+            ValidAudience = jwtSettings!.Audience,
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtSettings.Secret)
+            ),
+
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+#endregion CustomServices
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle  
 builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +68,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
