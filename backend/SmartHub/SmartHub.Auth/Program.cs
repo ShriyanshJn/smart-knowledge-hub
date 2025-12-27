@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using SmartHub.Core.Models;
+using SmartHub.Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +50,7 @@ builder.Services
             ClockSkew = TimeSpan.Zero
         };
     });
+builder.Services.AddScoped<ITokenService, TokenService>();
 #endregion CustomServices
 
 
