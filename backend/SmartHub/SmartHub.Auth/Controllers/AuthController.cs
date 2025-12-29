@@ -37,13 +37,5 @@ namespace SmartHub.Auth.Controllers
 
             return Ok(loginReponse);
         }
-
-        [Authorize]
-        [HttpGet]
-        [Route("authcheck")]
-        public IActionResult AuthCheck()
-        {
-            return Ok(new { Message = "You are authenticated!" });
-        }
     }
 }
