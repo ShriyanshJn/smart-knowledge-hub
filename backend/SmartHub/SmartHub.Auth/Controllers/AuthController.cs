@@ -21,7 +21,7 @@ namespace SmartHub.Auth.Controllers
         {
             if(string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
             {
-                return BadRequest("Email and password must be provided.");
+                return StatusCode(404,"Email and password must be provided.");
             }
 
             // TODO:- Validate User Credentials from DB
@@ -35,7 +35,7 @@ namespace SmartHub.Auth.Controllers
                 ExpiresIn = 60 * 15 // 15 minutes
             };
 
-            return Ok(loginReponse);
+            return StatusCode(200,loginReponse);
         }
     }
 }
