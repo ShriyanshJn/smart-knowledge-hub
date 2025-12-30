@@ -15,7 +15,7 @@ public class TokenService : ITokenService
         _jwtSettings = jwtOptions.Value;
     }
 
-    public string GenerateAccessToken(Guid userId, string email, string role)
+    public string GenerateAccessToken(int userId, string email, string role)
     {
         var claims = new List<Claim>
         {

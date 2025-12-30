@@ -3,6 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using SmartHub.Core.Models;
 using SmartHub.Core.Interfaces;
+using SmartHub.Auth.Interfaces;
+using SmartHub.Auth.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +53,7 @@ builder.Services
         };
     });
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 #endregion CustomServices
 
 
