@@ -4,6 +4,6 @@ namespace SmartHub.Auth.Interfaces
 {
     public interface IUserRepository
     {
-        Task<UserAuth> GetUserByEmail(string email)
+        Task<UserAuth> GetUserByEmail(string email);
     }
 }
