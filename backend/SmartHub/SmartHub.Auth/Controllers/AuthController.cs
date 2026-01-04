@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartHub.Auth.Interfaces;
 using SmartHub.Auth.Models;
+using SmartHub.Auth.Repositories;
+using SmartHub.Core.CommonUtility;
 using SmartHub.Core.Interfaces;
 
 namespace SmartHub.Auth.Controllers
@@ -25,15 +27,15 @@ namespace SmartHub.Auth.Controllers
             try
             {
                 if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
-                    return StatusCode(404, "Email and password must be provided.");
+                    return BadRequest("Email and password must be provided.");
 
                 var user = await _userService.GetUserByEmail(request.Email);
                 if (user == null)
-                    return StatusCode(401, "Invalid email or password.");
+                    return Unauthorized("Invalid email or password.");
 
                 var isPasswordValid = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
                 if (!isPasswordValid)
-                    return StatusCode(401, "Invalid email or password.");
+                    return Unauthorized("Invalid email or password.");
 
                 var token = _tokenService.GenerateAccessToken(user.Id, user.Email, user.Role);
                 var loginReponse = new LoginResponse
@@ -42,12 +44,37 @@ namespace SmartHub.Auth.Controllers
                     ExpiresIn = 60 * 15 // 15 minutes
                 };
 
-                return StatusCode(200, loginReponse);
+                return Ok(loginReponse);
             }
             catch (Exception ex)
             {
-                return StatusCode(404, "Invalid email or password.");
+                return BadRequest("Invalid email or password.");
             }
         }
+
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+                return BadRequest("Email and password are required.");
+            
+            if (!Utility.IsPasswordValid(request.Password))
+                return BadRequest("Password must be at least 8 characters and contain letters and numbers.");
+
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+            try
+            {
+                await _userService.RegisterUser(request.Email, passwordHash, "User");
+            }
+            catch (InvalidOperationException ex) when (ex.Message.Contains("Email already exists"))
+            {
+                return Conflict("Email already exists");
+            }
+
+            return Created("","User registered successfully.");
+        }
+
     }
 }

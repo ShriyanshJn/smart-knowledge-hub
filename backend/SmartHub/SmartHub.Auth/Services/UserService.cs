@@ -23,5 +23,17 @@ namespace SmartHub.Auth.Services
             }
             return user;
         }
+        public async Task RegisterUser(string email, string passwordHash, string role)
+        {
+            try
+            {
+                await _userRepository.RegisterUser(email, passwordHash, role);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
     }
 }
