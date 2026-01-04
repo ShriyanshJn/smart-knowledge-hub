@@ -5,6 +5,7 @@ using SmartHub.Core.Models;
 using SmartHub.Core.Interfaces;
 using SmartHub.Auth.Interfaces;
 using SmartHub.Auth.Repositories;
+using SmartHub.Auth.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,7 +53,10 @@ builder.Services
             ClockSkew = TimeSpan.Zero
         };
     });
+
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 #endregion CustomServices
 

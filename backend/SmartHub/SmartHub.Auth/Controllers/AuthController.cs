@@ -11,36 +11,43 @@ namespace SmartHub.Auth.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ITokenService _tokenService;
-        private readonly IUserRepository _userRepository;
-        public AuthController(ITokenService tokenService, IUserRepository userRepository)
+        private readonly IUserService _userService;
+        public AuthController(ITokenService tokenService, IUserService userService)
         {
             _tokenService = tokenService;
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            if(string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
-                return StatusCode(404,"Email and password must be provided.");
-
-            var user = await _userRepository.GetUserByEmail(request.Email);
-            if(user == null)
-                return StatusCode(401, "Invalid email or password.");
-
-            var isPasswordValid = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
-            if(!isPasswordValid)
-                return StatusCode(401, "Invalid email or password.");
-
-            var token = _tokenService.GenerateAccessToken(user.Id, user.Email, user.Role);
-            var loginReponse = new LoginResponse
+            try
             {
-                AccessToken = token,
-                ExpiresIn = 60 * 15 // 15 minutes
-            };
+                if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+                    return StatusCode(404, "Email and password must be provided.");
 
-            return StatusCode(200,loginReponse);
+                var user = await _userService.GetUserByEmail(request.Email);
+                if (user == null)
+                    return StatusCode(401, "Invalid email or password.");
+
+                var isPasswordValid = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
+                if (!isPasswordValid)
+                    return StatusCode(401, "Invalid email or password.");
+
+                var token = _tokenService.GenerateAccessToken(user.Id, user.Email, user.Role);
+                var loginReponse = new LoginResponse
+                {
+                    AccessToken = token,
+                    ExpiresIn = 60 * 15 // 15 minutes
+                };
+
+                return StatusCode(200, loginReponse);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, "Invalid email or password.");
+            }
         }
     }
 }
