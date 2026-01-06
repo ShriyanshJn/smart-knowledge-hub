@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartHub.Auth.Interfaces;
 using SmartHub.Auth.Models;
@@ -74,6 +75,18 @@ namespace SmartHub.Auth.Controllers
             }
 
             return Created("","User registered successfully.");
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public IActionResult Me()
+        {
+            return Ok(new
+            {
+                UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                Email = User.FindFirstValue(ClaimTypes.Email),
+                Role = User.FindFirstValue(ClaimTypes.Role)
+            });
         }
 
     }
