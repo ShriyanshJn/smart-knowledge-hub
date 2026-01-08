@@ -85,7 +85,6 @@ namespace SmartHub.Auth.Controllers
             {
                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                 Email = User.FindFirstValue(ClaimTypes.Email),
-                Mobile = User.FindFirstValue(ClaimTypes.MobilePhone),
                 Role = User.FindFirstValue(ClaimTypes.Role)
             });
         }
