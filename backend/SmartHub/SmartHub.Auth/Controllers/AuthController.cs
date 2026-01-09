@@ -84,8 +84,8 @@ namespace SmartHub.Auth.Controllers
             return Ok(new
             {
                 UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
-                Email = User.FindFirstValue(ClaimTypes.Email),
-                Role = User.FindFirstValue(ClaimTypes.Role)
+                Role = User.FindFirstValue(ClaimTypes.Role),
+                Email = User.FindFirstValue(ClaimTypes.Email)
             });
         }
 
