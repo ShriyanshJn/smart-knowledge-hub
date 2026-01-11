@@ -35,8 +35,8 @@ namespace SmartHub.Auth.Repositories
         }
         public async Task RegisterUser(string email, string passwordHash, string role)
         {
-            await using var conn = new SqlConnection(_connectionString);
-            await using var cmd = new SqlCommand("usp_RegisterUser", conn)
+            using var conn = new SqlConnection(_connectionString);
+            using var cmd = new SqlCommand("usp_RegisterUser", conn)
             {
                 CommandType = CommandType.StoredProcedure
             };
