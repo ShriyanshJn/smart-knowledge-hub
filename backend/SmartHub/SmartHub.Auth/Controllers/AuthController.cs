@@ -15,10 +15,12 @@ namespace SmartHub.Auth.Controllers
     {
         private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
-        public AuthController(ITokenService tokenService, IUserService userService)
+        private readonly IWebHostEnvironment _env;
+        public AuthController(ITokenService tokenService, IUserService userService, IWebHostEnvironment env)
         {
             _tokenService = tokenService;
             _userService = userService;
+            _env = env;
         }
 
         [HttpPost]
@@ -46,7 +48,7 @@ namespace SmartHub.Auth.Controllers
                     new CookieOptions
                     {
                         HttpOnly = true,
-                        Secure = true,
+                        Secure = !_env.IsDevelopment(),
                         SameSite = SameSiteMode.Strict,
                         Expires = DateTimeOffset.UtcNow.AddMinutes(15)
                     }
@@ -95,6 +97,14 @@ namespace SmartHub.Auth.Controllers
                 Email = User.FindFirstValue(ClaimTypes.Email)
             });
         }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("access_token");
+            return Ok(new { message = "Logged out" });
+        }
+
 
     }
 }
