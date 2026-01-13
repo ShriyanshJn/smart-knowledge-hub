@@ -39,13 +39,20 @@ namespace SmartHub.Auth.Controllers
                     return Unauthorized("Invalid email or password.");
 
                 var token = _tokenService.GenerateAccessToken(user.Id, user.Email, user.Role);
-                var loginReponse = new LoginResponse
-                {
-                    AccessToken = token,
-                    ExpiresIn = 60 * 15 // 15 minutes
-                };
 
-                return Ok(loginReponse);
+                Response.Cookies.Append(
+                    "access_token",
+                    token,
+                    new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        SameSite = SameSiteMode.Strict,
+                        Expires = DateTimeOffset.UtcNow.AddMinutes(15)
+                    }
+                );
+
+                return Ok(new { message = "Login successful" });
             }
             catch (Exception ex)
             {
@@ -59,7 +66,7 @@ namespace SmartHub.Auth.Controllers
         {
             if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
                 return BadRequest("Email and password are required.");
-            
+
             if (!Utility.IsPasswordValid(request.Password))
                 return BadRequest("Password must be at least 8 characters and contain letters and numbers.");
 
@@ -74,7 +81,7 @@ namespace SmartHub.Auth.Controllers
                 return Conflict("Email already exists");
             }
 
-            return Created("","User registered successfully.");
+            return Created("", "User registered successfully.");
         }
 
         [Authorize]
