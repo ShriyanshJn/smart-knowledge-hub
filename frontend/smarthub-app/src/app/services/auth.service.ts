@@ -24,4 +24,13 @@ export class AuthService {
       password
     });
   }
+
+  me() {
+    return this.httpClient.get(`${this.authBaseUrl}/me`);
+  }
+
+  logout() {
+    return this.httpClient.post(`${this.authBaseUrl}/logout`, {});
+  }
+
 }
