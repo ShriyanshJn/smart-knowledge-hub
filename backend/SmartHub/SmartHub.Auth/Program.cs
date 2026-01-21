@@ -6,6 +6,8 @@ using SmartHub.Core.Interfaces;
 using SmartHub.Auth.Interfaces;
 using SmartHub.Auth.Repositories;
 using SmartHub.Auth.Services;
+using Microsoft.EntityFrameworkCore;
+using SmartHub.Auth.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,6 +76,13 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowCredentials();
     });
+});
+
+builder.Services.AddDbContext<AuthDbContext>(options =>
+{
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("AuthDb")
+    );
 });
 
 builder.Services.AddScoped<ITokenService, TokenService>();
