@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SmartHub.Auth.Data;
 using SmartHub.Auth.Interfaces;
 using SmartHub.Auth.Models;
 using SmartHub.Auth.Repositories;
@@ -40,7 +42,7 @@ namespace SmartHub.Auth.Controllers
                 if (!isPasswordValid)
                     return Unauthorized("Invalid email or password.");
 
-                var token = _tokenService.GenerateAccessToken(user.Id, user.Email, user.Role);
+                var token = _tokenService.GenerateAccessToken(Convert.ToInt32(user.Id), user.Email, user.Role);
 
                 Response.Cookies.Append(
                     "access_token",
@@ -72,18 +74,19 @@ namespace SmartHub.Auth.Controllers
             if (!Utility.IsPasswordValid(request.Password))
                 return BadRequest("Password must be at least 8 characters and contain letters and numbers.");
 
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
             try
             {
-                await _userService.RegisterUser(request.Email, passwordHash, "User");
-            }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("Email already exists"))
-            {
-                return Conflict("Email already exists");
-            }
+                await _userService.RegisterUser(
+                    request.Email,
+                    request.Password
+                );
 
-            return Created("", "User registered successfully.");
+                return Ok(new { message = "User registered successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         [Authorize]

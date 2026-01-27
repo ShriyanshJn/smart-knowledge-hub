@@ -1,24 +1,28 @@
-﻿using System.Data;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartHub.Auth.Data;
+using SmartHub.Auth.Entities;
 using SmartHub.Auth.Interfaces;
-using SmartHub.Auth.Models;
 
 namespace SmartHub.Auth.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public UserRepository(IConfiguration configuration)
+        private readonly AuthDbContext _db;
+
+        public UserRepository(AuthDbContext db)
         {
-           
-        }
-        public async Task<UserAuth> GetUserByEmail(string email)
-        {
-            return new UserAuth();
-        }
-        public async Task RegisterUser(string email, string passwordHash, string role)
-        {
-            
+            _db = db;
         }
 
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            return await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task AddAsync(User user)
+        {
+            _db.Users.Add(user);
+            await _db.SaveChangesAsync();
+        }
     }
 }

@@ -1,39 +1,53 @@
-﻿using SmartHub.Auth.Interfaces;
+﻿using SmartHub.Auth.Entities;
+using SmartHub.Auth.Interfaces;
 using SmartHub.Auth.Models;
+using SmartHub.Auth.Repositories;
 
 namespace SmartHub.Auth.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+
         public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
-        public async Task<UserAuth> GetUserByEmail(string email)
+
+        public async Task<UserAuth?> GetUserByEmail(string email)
         {
-            var user = new UserAuth();
-            try
+            var user = await _userRepository.GetByEmailAsync(email);
+            if (user == null) return null;
+
+            return new UserAuth
             {
-                user = await _userRepository.GetUserByEmail(email);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return user;
+                Id = user.Id,
+                Email = user.Email,
+                Role = user.Role
+            };
         }
-        public async Task RegisterUser(string email, string passwordHash, string role)
+
+        public async Task RegisterUser(string email, string password)
         {
-            try
+            var existingUser = await _userRepository.GetByEmailAsync(email);
+            if (existingUser != null)
             {
-                await _userRepository.RegisterUser(email, passwordHash, role);
-            }
-            catch (Exception ex)
-            {
-                throw;
+                throw new InvalidOperationException("Email already exists");
             }
 
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
+
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Email = email,
+                PasswordHash = passwordHash,
+                Role = "User",
+                CreatedDate = DateTime.UtcNow
+            };
+
+            await _userRepository.AddAsync(user);
         }
     }
+
 }
