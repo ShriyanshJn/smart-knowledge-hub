@@ -2,6 +2,6 @@
 {
     public interface ITokenService
     {
-        string GenerateAccessToken(int userId, string email, string role);
+        string GenerateAccessToken(Guid userId, string email, string role);
     }
 }

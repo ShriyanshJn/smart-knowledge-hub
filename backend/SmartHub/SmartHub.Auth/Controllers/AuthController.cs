@@ -15,34 +15,23 @@ namespace SmartHub.Auth.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
         private readonly IWebHostEnvironment _env;
-        public AuthController(ITokenService tokenService, IUserService userService, IWebHostEnvironment env)
+        public AuthController(IUserService userService, IWebHostEnvironment env)
         {
-            _tokenService = tokenService;
             _userService = userService;
             _env = env;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
-                    return BadRequest("Email and password must be provided.");
-
-                var user = await _userService.GetUserByEmail(request.Email);
-                if (user == null)
-                    return Unauthorized("Invalid email or password.");
-
-                var isPasswordValid = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
-                if (!isPasswordValid)
-                    return Unauthorized("Invalid email or password.");
-
-                var token = _tokenService.GenerateAccessToken(Convert.ToInt32(user.Id), user.Email, user.Role);
+                var loginResponse = await _userService.LoginUser(request.Email, request.Password);
+                var token = loginResponse.AccessToken;
 
                 Response.Cookies.Append(
                     "access_token",
@@ -68,12 +57,6 @@ namespace SmartHub.Auth.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
-                return BadRequest("Email and password are required.");
-
-            if (!Utility.IsPasswordValid(request.Password))
-                return BadRequest("Password must be at least 8 characters and contain letters and numbers.");
-
             try
             {
                 await _userService.RegisterUser(

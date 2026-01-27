@@ -7,5 +7,6 @@ namespace SmartHub.Auth.Interfaces
     {
         Task<UserAuth?> GetUserByEmail(string email);
         Task RegisterUser(string email, string password);
+        Task<LoginResponse> LoginUser(string email, string password);
     }
 }
