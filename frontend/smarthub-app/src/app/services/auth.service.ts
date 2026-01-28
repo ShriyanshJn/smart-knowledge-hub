@@ -12,25 +12,30 @@ export class AuthService {
   constructor(private httpClient: HttpClient) {}
 
   login(email: string, password: string) {
-    return this.httpClient.post(`${this.authBaseUrl}/login`, {
-      email,
-      password
-    });
+    return this.httpClient.post(
+        `${this.authBaseUrl}/login`, 
+        {email, password}
+    );
   }
 
   register(email: string, password: string) {
-    return this.httpClient.post(`${this.authBaseUrl}/register`, {
-      email,
-      password
-    });
+    return this.httpClient.post(
+        `${this.authBaseUrl}/register`, 
+        {email, password}
+    );
   }
 
   me() {
-    return this.httpClient.get(`${this.authBaseUrl}/me`);
+    return this.httpClient.get(
+        `${this.authBaseUrl}/me`
+    );
   }
 
   logout() {
-    return this.httpClient.post(`${this.authBaseUrl}/logout`, {});
+    return this.httpClient.post(
+        `${this.authBaseUrl}/logout`, 
+        {}
+    );
   }
 
 }
