@@ -1,13 +1,8 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SmartHub.Auth.Data;
 using SmartHub.Auth.Interfaces;
 using SmartHub.Auth.Models;
-using SmartHub.Auth.Repositories;
-using SmartHub.Core.CommonUtility;
-using SmartHub.Core.Interfaces;
 
 namespace SmartHub.Auth.Controllers
 {
@@ -84,11 +79,20 @@ namespace SmartHub.Auth.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost("logout")]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("access_token");
-            return Ok(new { message = "Logged out" });
+            Response.Cookies.Delete(
+                "access_token",
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = !_env.IsDevelopment(),
+                    SameSite = SameSiteMode.Strict
+                }
+            );
+            return Ok(new { message = "Logged out successfully" });
         }
 
 
