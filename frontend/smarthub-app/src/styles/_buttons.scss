@@ -1,0 +1,28 @@
+@use "./variables";
+
+button {
+  width: 100%;
+  padding: 10px;
+  border-radius: variables.$radius-sm;
+  border: none;
+
+  background-color: variables.$primary;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+
+  margin-top: variables.$space-md;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: variables.$primary-hover;
+  }
+
+  &:disabled {
+    background-color: variables.$border-light;
+    color: variables.$text-muted;
+    cursor: not-allowed;
+  }
+}

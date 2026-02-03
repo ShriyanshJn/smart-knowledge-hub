@@ -1,0 +1,44 @@
+@use "./variables";
+
+form {
+  background: variables.$bg-card;
+  padding: variables.$space-xl;
+  border-radius: variables.$radius-md;
+  width: 100%;
+  max-width: 420px;
+
+  border: 1px solid variables.$border-light;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: variables.$space-md;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: variables.$space-xs;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: variables.$radius-sm;
+  border: 1px solid variables.$border-light;
+  font-size: 14px;
+  background-color: #fff;
+
+  &:focus {
+    outline: none;
+    border-color: variables.$primary;
+    box-shadow: 0 0 0 1px variables.$primary;
+  }
+}
+
+small {
+  color: variables.$danger;
+  font-size: 12px;
+  line-height: 1.4;
+  margin-top: variables.$space-xs;
+}
