@@ -1,41 +1,45 @@
-<h2>Login</h2>
+<div class="page-center">
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <h2>Login</h2>
+    <div>
+      <label>Email</label>
+      <input type="email" formControlName="email" />
 
-<form [formGroup]="loginForm" (ngSubmit)="login()">
-  <div>
-    <label>Email</label>
-    <input type="email" formControlName="email" />
+      <small
+        *ngIf="
+          loginForm.controls.email.touched && loginForm.controls.email.errors
+        "
+        style="color: red"
+      >
+        {{
+          loginForm.controls.email.errors.required?.message ||
+            loginForm.controls.email.errors.email?.message
+        }}
+      </small>
+    </div>
 
-    <small
-      *ngIf="
-        loginForm.controls.email.touched && loginForm.controls.email.errors
-      "
-      style="color: red"
-    >
-      {{ loginForm.controls.email.errors | json }}
-    </small>
-  </div>
+    <div>
+      <label>Password</label>
+      <input type="password" formControlName="password" />
 
-  <div>
-    <label>Password</label>
-    <input type="password" formControlName="password" />
+      <small
+        *ngIf="
+          loginForm.controls.password.touched &&
+          loginForm.controls.password.errors
+        "
+        style="color: red"
+      >
+        {{
+          loginForm.controls.password.errors.required?.message ||
+            loginForm.controls.password.errors.password?.message
+        }}
+      </small>
+    </div>
 
-    <small
-      *ngIf="
-        loginForm.controls.password.touched &&
-        loginForm.controls.password.errors
-      "
-      style="color: red"
-    >
-      {{
-        loginForm.controls.password.errors.required.message ||
-          loginForm.controls.password.errors.pattern.message
-      }}
-    </small>
-  </div>
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
 
-  <button type="submit" [disabled]="loginForm.invalid">Login</button>
-
-  <p *ngIf="error" style="color: red">
-    {{ error }}
-  </p>
-</form>
+    <p *ngIf="error" style="color: red">
+      {{ error }}
+    </p>
+  </form>
+</div>

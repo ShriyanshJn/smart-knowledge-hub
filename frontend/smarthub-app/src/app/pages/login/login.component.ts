@@ -2,21 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RxwebValidators } from '@rxweb/reactive-form-validators';
+import {
+  RxReactiveFormsModule,
+  RxwebValidators,
+} from '@rxweb/reactive-form-validators';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RxReactiveFormsModule],
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   error = '';
-
-  private readonly PASSWORD_REGEX =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   constructor(
     private authService: AuthService,
@@ -27,12 +27,20 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       email: new FormControl('', [
         RxwebValidators.required({ message: 'Email is required' }),
-        RxwebValidators.email({ message: 'Invalid email format' }),
+        RxwebValidators.email({
+          message: 'Please enter a valid email address',
+        }),
       ]),
       password: new FormControl('', [
         RxwebValidators.required({ message: 'Password is required' }),
-        RxwebValidators.pattern({
-          expression: { password: this.PASSWORD_REGEX },
+        RxwebValidators.password({
+          validation: {
+            minLength: 8,
+            digit: true,
+            specialCharacter: true,
+            upperCase: true,
+            lowerCase: true,
+          },
           message:
             'Password must be at least 8 characters and include uppercase, lowercase, number and special character',
         }),
