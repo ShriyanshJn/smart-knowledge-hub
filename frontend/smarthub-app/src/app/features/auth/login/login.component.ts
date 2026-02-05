@@ -6,7 +6,7 @@ import {
   RxReactiveFormsModule,
   RxwebValidators,
 } from '@rxweb/reactive-form-validators';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
