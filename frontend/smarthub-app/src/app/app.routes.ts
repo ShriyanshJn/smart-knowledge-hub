@@ -10,21 +10,25 @@ import { DashboardComponent } from './features/dashboard/dashboard/dashboard.com
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'auth',
     component: AuthLayoutComponent,
     children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
     ],
   },
 
   {
-    path: '',
+    path: 'app',
     component: AppLayoutComponent,
-    children: [{ path: 'dashboard', component: DashboardComponent }],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent },
+    ],
   },
 
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
 
-  { path: '**', redirectTo: 'login' },
+  { path: '**', redirectTo: 'auth' },
 ];
