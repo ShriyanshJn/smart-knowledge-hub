@@ -1,0 +1,46 @@
+@use "../../../styles/variables";
+
+.app-shell {
+  display: flex;
+  height: 100vh;
+  background: variables.$bg-main;
+}
+
+.sidebar {
+  width: 240px;
+  background: variables.$bg-card;
+  border-right: 1px solid variables.$border-light;
+  padding: variables.$space-xl;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: variables.$space-xl;
+  color: variables.$text-main;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$space-md;
+}
+
+nav a {
+  text-decoration: none;
+  color: variables.$text-muted;
+  font-weight: 500;
+  padding: variables.$space-sm;
+  border-radius: variables.$radius-sm;
+  transition: 0.2s ease;
+}
+
+nav a:hover {
+  background: variables.$bg-main;
+  color: variables.$primary;
+}
+
+.content {
+  flex: 1;
+  padding: variables.$space-xl;
+}

@@ -1,0 +1,14 @@
+@use "../../../styles/variables";
+
+.cards {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background: variables.$bg-card;
+  border: 1px solid variables.$border-light;
+  border-radius: variables.$radius-md;
+  padding: variables.$space-lg;
+}
