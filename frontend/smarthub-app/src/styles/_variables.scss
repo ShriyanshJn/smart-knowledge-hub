@@ -1,34 +1,33 @@
-/* Brand */
-$primary: #4f46e5;
-$primary-hover: #4338ca;
+$primary: #6366f1;
+$primary-hover: #4f46e5;
 
-/* Backgrounds */
 $bg-main: #f3f4f6;
 $bg-card: #ffffff;
+$bg-page: #f9fafb;
 
-/* Text */
 $text-main: #111827;
 $text-muted: #6b7280;
 
-/* Borders */
 $border-light: #e5e7eb;
+$border: #e5e7eb;
 
-/* Feedback */
 $danger: #dc2626;
 $success: #16a34a;
+$error: #dc2626;
 
-/* Spacing */
 $space-xs: 4px;
 $space-sm: 8px;
 $space-md: 16px;
 $space-lg: 24px;
 $space-xl: 32px;
 
-/* Radius */
 $radius-sm: 6px;
 $radius-md: 10px;
+$radius: 16px;
+$input-radius: 10px;
 
-/* Font */
+$shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+
 $font-base:
   "Inter",
   system-ui,

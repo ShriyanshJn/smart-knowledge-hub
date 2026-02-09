@@ -1,45 +1,33 @@
-<div class="page-center">
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <h2>Login</h2>
-    <div>
-      <label>Email</label>
-      <input type="email" formControlName="email" />
+<div class="auth-card">
+  <h1>Login</h1>
+  <p class="subtitle">Welcome back to SmartHub</p>
 
-      <small
-        *ngIf="
-          loginForm.controls.email.touched && loginForm.controls.email.errors
-        "
-        style="color: red"
-      >
-        {{
-          loginForm.controls.email.errors.required?.message ||
-            loginForm.controls.email.errors.email?.message
-        }}
-      </small>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="field">
+      <label>Email</label>
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="you@example.com"
+      />
     </div>
 
-    <div>
+    <div class="field">
       <label>Password</label>
-      <input type="password" formControlName="password" />
-
-      <small
-        *ngIf="
-          loginForm.controls.password.touched &&
-          loginForm.controls.password.errors
-        "
-        style="color: red"
-      >
-        {{
-          loginForm.controls.password.errors.required?.message ||
-            loginForm.controls.password.errors.password?.message
-        }}
-      </small>
+      <input
+        type="password"
+        formControlName="password"
+        placeholder="Enter password"
+      />
     </div>
 
     <button type="submit" [disabled]="loginForm.invalid">Login</button>
 
-    <p *ngIf="error" style="color: red">
-      {{ error }}
+    <p class="switch">
+      Don’t have an account?
+      <a routerLink="/auth/register">Register</a>
     </p>
+
+    <p *ngIf="error" class="error">{{ error }}</p>
   </form>
 </div>

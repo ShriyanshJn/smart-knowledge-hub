@@ -1,0 +1,70 @@
+@use "./variables" as v;
+
+.auth-card {
+  width: 420px;
+  padding: 42px;
+  border-radius: v.$radius;
+
+  background: v.$bg-card;
+  border: 1px solid v.$border;
+
+  box-shadow: v.$shadow;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: v.$text-main;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: v.$text-muted;
+  margin-bottom: 28px;
+}
+
+.field {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: v.$text-main;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: v.$input-radius;
+  border: 1px solid v.$border;
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+  border-color: v.$primary;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.switch {
+  margin-top: 18px;
+  font-size: 14px;
+  text-align: center;
+  color: v.$text-muted;
+}
+
+.switch a {
+  color: v.$primary-hover;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.error {
+  margin-top: 14px;
+  text-align: center;
+  color: v.$error;
+}

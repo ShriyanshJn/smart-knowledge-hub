@@ -1,28 +1,24 @@
-@use "./variables";
+@use "./variables" as v;
 
 button {
   width: 100%;
-  padding: 10px;
-  border-radius: variables.$radius-sm;
+  padding: 12px;
+  border-radius: v.$input-radius;
+
   border: none;
-
-  background-color: variables.$primary;
+  background: v.$primary;
   color: white;
-  font-weight: 500;
-  font-size: 14px;
 
-  margin-top: variables.$space-md;
-
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+}
 
-  &:hover {
-    background-color: variables.$primary-hover;
-  }
+button:hover {
+  background: v.$primary-hover;
+}
 
-  &:disabled {
-    background-color: variables.$border-light;
-    color: variables.$text-muted;
-    cursor: not-allowed;
-  }
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

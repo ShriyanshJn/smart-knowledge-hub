@@ -1,0 +1,11 @@
+@use "../../../../styles/variables" as v;
+
+.auth-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: v.$bg-page;
+  font-family: Inter, sans-serif;
+}
