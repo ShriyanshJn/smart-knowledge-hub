@@ -20,8 +20,6 @@ export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   error = '';
 
-  private EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -31,13 +29,23 @@ export class RegisterComponent implements OnInit {
     this.registerForm = new FormGroup({
       email: new FormControl('', [
         RxwebValidators.required({ message: 'Email is required' }),
-        RxwebValidators.pattern({
-          expression: { email: this.EMAIL_REGEX },
-          message: 'Enter a valid email',
+        RxwebValidators.email({
+          message: 'Please enter a valid email address',
         }),
       ]),
       password: new FormControl('', [
         RxwebValidators.required({ message: 'Password is required' }),
+        RxwebValidators.password({
+          validation: {
+            minLength: 8,
+            digit: true,
+            specialCharacter: true,
+            upperCase: true,
+            lowerCase: true,
+          },
+          message:
+            'Password must be at least 8 characters and include uppercase, lowercase, number and special character',
+        }),
       ]),
     });
   }

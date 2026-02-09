@@ -10,6 +10,17 @@
         formControlName="email"
         placeholder="you@example.com"
       />
+      <small
+        *ngIf="
+          registerForm.controls.email.touched &&
+          registerForm.controls.email.errors
+        "
+      >
+        {{
+          registerForm.controls.email.errors.required?.message ||
+            registerForm.controls.email.errors.email?.message
+        }}
+      </small>
     </div>
 
     <div class="field">
@@ -19,6 +30,17 @@
         formControlName="password"
         placeholder="Create password"
       />
+      <small
+        *ngIf="
+          registerForm.controls.password.touched &&
+          registerForm.controls.password.errors
+        "
+      >
+        {{
+          registerForm.controls.password.errors.required?.message ||
+            registerForm.controls.password.errors.password?.message
+        }}
+      </small>
     </div>
 
     <button type="submit" [disabled]="registerForm.invalid">Register</button>

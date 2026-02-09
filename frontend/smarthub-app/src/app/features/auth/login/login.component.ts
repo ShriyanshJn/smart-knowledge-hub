@@ -34,17 +34,6 @@ export class LoginComponent implements OnInit {
       ]),
       password: new FormControl('', [
         RxwebValidators.required({ message: 'Password is required' }),
-        RxwebValidators.password({
-          validation: {
-            minLength: 8,
-            digit: true,
-            specialCharacter: true,
-            upperCase: true,
-            lowerCase: true,
-          },
-          message:
-            'Password must be at least 8 characters and include uppercase, lowercase, number and special character',
-        }),
       ]),
     });
   }
